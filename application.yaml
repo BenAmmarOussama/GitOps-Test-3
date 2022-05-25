@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/BenAmmarOussama/GitOps-Test-1.git
     targetRevision: HEAD
-    path: chart-1
+    path: k8s
     directory:
       recurse: true
   destination: 
