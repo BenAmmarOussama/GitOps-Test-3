@@ -1,0 +1,30 @@
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  namespace: monitoring
+  name: config-alertmanager
+  labels:
+    alertmanagerConfig: example
+spec:
+  route:
+    receiver: 'slack-notifications'
+
+  receivers:
+  - name: 'slack-notifications'
+    slackConfigs:
+    - apiURL:
+        name: slack-config 
+        key: urlSecret  
+      channel: '#team2'
+      sendResolved: false
+
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: slack-config
+  namespace: monitoring
+stringData:
+  urlSecret: https://hooks.slack.com/services/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

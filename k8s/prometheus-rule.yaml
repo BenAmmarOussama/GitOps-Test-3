@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  creationTimestamp: null
+  labels:
+    role: alert-rules
+  name: prometheus-example-rules
+  namespace: monitoring
+spec:
+  groups:
+  - name: ./example.rules
+    rules:
+    - alert: ExampleAlert
+      expr: up == 0
+      for: 10m
+      labels: 
+        severity: critical
+      annotations: 
+        summary: "Instance {{ $labels.instance }} down"
+        description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 10 minutes."

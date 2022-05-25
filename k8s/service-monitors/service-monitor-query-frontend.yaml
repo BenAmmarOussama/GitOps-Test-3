@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: thanos-query-frontend
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: thanos-query-frontend
+      monitored-by-prometheus: "true"
+  namespaceSelector:
+    any: true
+  endpoints:
+    - interval: 15s
+      targetPort: web
+      path: /metrics

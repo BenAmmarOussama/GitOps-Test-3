@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanos-query-frontend
+  namespace: monitoring
+  labels:
+    app: thanos-query-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thanos-query-frontend
+  template:
+    metadata:
+      labels:
+        app: thanos-query-frontend
+    spec:
+      containers:
+      - name: thanos-query-frontend
+        image: thanosio/thanos:v0.25.2
+        resources:
+          requests:
+            memory: 400Mi
+            cpu: 100m
+          limits:
+            memory: 400Mi
+            cpu: 100m
+        args:
+        - 'query-frontend'
+        - '--http-address=0.0.0.0:10901'
+        - '--query-frontend.downstream-url=http://thanos-query-nodeport.default.svc.cluster.local.:10902'
+        ports:
+        - name: web
+          containerPort: 10901
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thanos-query-frontend
+  namespace: monitoring
+  labels:
+    app: thanos-query-frontend
+spec:
+  selector:
+    app: thanos-query-frontend
+  type: NodePort
+  ports:
+  - name: web
+    port: 10901
+    targetPort: web
+    nodePort: 30901

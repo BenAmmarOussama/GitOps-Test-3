@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-test-app-3
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/BenAmmarOussama/GitOps-Test-1.git
+    targetRevision: HEAD
+    path: chart-1
+    directory:
+      recurse: true
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true

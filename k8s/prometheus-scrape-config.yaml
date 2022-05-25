@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: additional-scrape-configs
+  namespace: monitoring
+stringData:
+  jobs: |
+    - job_name: 'applications'
+      static_configs:
+      - targets: ['host.docker.internal:5000']
