@@ -5,7 +5,7 @@ metadata:
   labels:
     role: alert-rules
   name: prometheus-example-rules
-  namespace: monitoring
+  
 spec:
   groups:
   - name: ./example.rules
