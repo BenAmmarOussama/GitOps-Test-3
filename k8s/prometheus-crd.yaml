@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: Replace=true
 spec:
-  replicas: 3
+  replicas: 2
   podMetadata:
     labels:
       thanos-store-api: "true"
